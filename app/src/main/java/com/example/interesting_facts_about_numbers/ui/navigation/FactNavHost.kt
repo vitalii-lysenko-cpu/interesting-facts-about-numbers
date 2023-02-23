@@ -1,4 +1,4 @@
-package com.example.interesting_facts_about_numbers.ui.presentation.navigation
+package com.example.interesting_facts_about_numbers.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
@@ -27,8 +27,8 @@ fun FactNavHost() {
             NavRoute.NumberFactScreen.route,
             arguments = listOf(navArgument("number") {
                 type = NavType.StringType
-//                defaultValue = "random"
-//                nullable = true
+                defaultValue = "random"
+                nullable = true
             })
         ) {
             NumberFactScreen(navController = navController)

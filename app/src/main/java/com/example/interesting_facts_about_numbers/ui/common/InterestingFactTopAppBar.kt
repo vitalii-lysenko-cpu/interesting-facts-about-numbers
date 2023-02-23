@@ -38,7 +38,7 @@ fun InterestingFactTopAppBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.White,
             scrolledContainerColor = Color.White,
-            navigationIconContentColor =  com.example.interesting_facts_about_numbers.ui.theme.iconColor,
+            navigationIconContentColor = com.example.interesting_facts_about_numbers.ui.theme.iconColor,
             titleContentColor = com.example.interesting_facts_about_numbers.ui.theme.titleColor,
             actionIconContentColor = Color.White,
         ),

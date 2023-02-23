@@ -1,6 +1,5 @@
 package com.example.interesting_facts_about_numbers.ui.presentation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -24,12 +23,10 @@ import com.example.interesting_facts_about_numbers.R
 import com.example.interesting_facts_about_numbers.ui.common.InterestingFactAppBarDefaults
 import com.example.interesting_facts_about_numbers.ui.common.InterestingFactTopAppBar
 import com.example.interesting_facts_about_numbers.ui.common.Screen
-import com.example.interesting_facts_about_numbers.ui.presentation.state.NumberFactUiState
-import com.example.interesting_facts_about_numbers.ui.presentation.state.NumberFactViewModel
+import com.example.interesting_facts_about_numbers.ui.presentation.number_fact_screen.NumberFactUiState
+import com.example.interesting_facts_about_numbers.ui.presentation.number_fact_screen.NumberFactViewModel
 import com.example.interesting_facts_about_numbers.ui.theme.Shapes
 import com.example.interesting_facts_about_numbers.ui.theme.Teal200
-import com.example.interesting_facts_about_numbers.ui.theme.backgroundTextBox
-import com.example.interesting_facts_about_numbers.ui.theme.backgroundTextNumberBox
 
 @Composable
 fun NumberFactScreen(
@@ -73,15 +70,25 @@ fun NumberFactScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Box(
+                Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(color = backgroundTextNumberBox),
-                    contentAlignment = Alignment.Center,
+                        .wrapContentHeight()
+                        .padding(16.dp),
+                    content = {
+                        Text(
+                            text = state.fact.number,
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                )
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(16.dp)
                 ) {
-                    Text(text = state.fact.num.value)
-                }
-                Box(modifier = Modifier.background(color = backgroundTextBox)) {
                     Text(
                         text = state.fact.text
                     )
@@ -124,8 +131,4 @@ private fun DialogError(state: NumberFactUiState.Initial.Error) {
 @Preview
 @Composable
 internal fun NumberFactScreenPreview() {
-//    NumberFactScreen(
-//
-//        onClick = {},
-//    )
 }

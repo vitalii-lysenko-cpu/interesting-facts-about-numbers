@@ -1,13 +1,11 @@
-package com.example.interesting_facts_about_numbers.ui.presentation.state
+package com.example.interesting_facts_about_numbers.ui.presentation.number_fact_screen
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.example.interesting_facts_about_numbers.functionality.domain.GetNumberFactByNumberUseCase
-import com.example.interesting_facts_about_numbers.functionality.domain.GetRandomNumberFactUseCase
-import com.example.interesting_facts_about_numbers.functionality.entity.Num
-import com.example.interesting_facts_about_numbers.functionality.entity.NumberInterestingFact
+import com.example.interesting_facts_about_numbers.functionality.GetNumberFactByNumberUseCase
+import com.example.interesting_facts_about_numbers.functionality.GetRandomNumberFactUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,13 +20,9 @@ class NumberFactViewModel @Inject constructor(
 ) : ViewModel() {
     private val mutState: MutableStateFlow<NumberFactUiState> =
         MutableStateFlow(
-            NumberFactUiState.Data(
-                NumberInterestingFact(
-                    Num(value = ""),
-                    text = ""
-                )
-            )
+            NumberFactUiState.Initial.Loading
         )
+
     val state: StateFlow<NumberFactUiState> = mutState
 
     init {
@@ -38,7 +32,7 @@ class NumberFactViewModel @Inject constructor(
                 if (pasArg != "random") {
                     try {
                         NumberFactUiState.Data(
-                            fact = getNumberFactByNumberUseCase.invoke(Num(value = pasArg))
+                            fact = getNumberFactByNumberUseCase.invoke(pasArg)
                         )
                     } catch (e: Exception) {
                         NumberFactUiState.Initial.Error("Error")
@@ -56,8 +50,7 @@ class NumberFactViewModel @Inject constructor(
         }
     }
 
-
     fun onClick(navController: NavHostController) {
-        navController.navigateUp()
+        navController.navigate("start_screen")
     }
 }

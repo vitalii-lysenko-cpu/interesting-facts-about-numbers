@@ -7,20 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun Screen (
-    modifier: Modifier = Modifier,
-    topBar: @Composable () -> Unit = {},
-    content: @Composable () -> Unit
-) {
-    ScreenImpl(
-        modifier = modifier,
-        topBar = topBar,
-        content = content,
-    )
-}
-
-@Composable
-private fun ScreenImpl(
+fun Screen(
     modifier: Modifier = Modifier,
     topBar: @Composable () -> Unit = {},
     content: @Composable () -> Unit,

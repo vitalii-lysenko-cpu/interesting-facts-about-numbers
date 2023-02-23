@@ -1,6 +1,6 @@
-package com.example.interesting_facts_about_numbers.ui.presentation.state
+package com.example.interesting_facts_about_numbers.ui.presentation.number_fact_screen
 
-import com.example.interesting_facts_about_numbers.functionality.entity.NumberInterestingFact
+import com.example.interesting_facts_about_numbers.functionality.entity.NumberFact
 
 sealed interface NumberFactUiState {
     sealed interface Initial : NumberFactUiState {
@@ -9,6 +9,6 @@ sealed interface NumberFactUiState {
     }
 
     data class Data(
-        val fact: NumberInterestingFact,
+        val fact: NumberFact,
     ) : NumberFactUiState
 }

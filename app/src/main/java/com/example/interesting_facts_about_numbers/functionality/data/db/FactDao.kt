@@ -9,7 +9,7 @@ interface FactDao {
     suspend fun getAllNumbers(): List<NumberFact>
 
     @Query("SELECT * FROM number_fact WHERE number = :number")
-    suspend fun getNumberFactByNumber(number: String): NumberFact
+    suspend fun getNumberFactByNumber(number: String?): NumberFact
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(numberFact: NumberFact)

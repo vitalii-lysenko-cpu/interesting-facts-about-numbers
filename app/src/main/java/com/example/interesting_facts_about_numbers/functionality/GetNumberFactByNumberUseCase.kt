@@ -6,6 +6,6 @@ import javax.inject.Inject
 class GetNumberFactByNumberUseCase @Inject constructor(
     private val factRepository: FactRepository,
 ) {
-    suspend operator fun invoke(num: String) =
+    suspend operator fun invoke(num: String?) =
         factRepository.getNumberFactByNumber(num)
 }

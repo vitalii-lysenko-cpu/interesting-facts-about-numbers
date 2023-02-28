@@ -10,7 +10,7 @@ interface NumberApi {
     @Headers("Content-type: application/json")
     @GET("{number}")
     suspend fun getFact(
-        @Path("number") num: String
+        @Path("number") num: String?
     ): ApiNumberInterestingFact
 
     @Headers("Content-type: application/json")

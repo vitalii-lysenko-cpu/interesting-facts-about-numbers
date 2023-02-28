@@ -30,6 +30,7 @@ import com.example.interesting_facts_about_numbers.ui.presentation.start_screen.
 import com.example.interesting_facts_about_numbers.ui.presentation.start_screen.StartScreenViewModel
 import com.example.interesting_facts_about_numbers.ui.theme.Shapes
 import com.example.interesting_facts_about_numbers.ui.theme.Teal200
+import com.example.interesting_facts_about_numbers.ui.theme.numberColor
 
 @Composable
 fun StartScreen(
@@ -42,9 +43,9 @@ fun StartScreen(
         state = state,
         navController = navController,
         onChange = startScreenViewModel::onChange,
-        onGetNewFact = startScreenViewModel::getNewFact,
-        onGetFact = startScreenViewModel::getFact,
-        onGetRandomFact = startScreenViewModel::getRandomFact,
+        onGetFact = startScreenViewModel::navigateToNumberFactScreenFromHistory,
+        onGetFactByNumber = startScreenViewModel::navigateToNumberFactScreenWithNumberArgument,
+        onGetRandomFact = startScreenViewModel::navigateToNumberFactScreenWithRandomArgument,
         onCloseErrorDialog = startScreenViewModel::onCloseErrorDialog,
     )
 }
@@ -56,7 +57,7 @@ fun StartScreen(
     navController: NavHostController,
     onChange: (String) -> Unit,
     onGetFact: (NavHostController, String) -> Unit,
-    onGetNewFact: (NavHostController, String) -> Unit,
+    onGetFactByNumber: (NavHostController, String) -> Unit,
     onGetRandomFact: (NavHostController) -> Unit,
     onCloseErrorDialog: () -> Unit
 ) = Screen(
@@ -73,7 +74,7 @@ fun StartScreen(
                 state,
                 onChange,
                 onGetFact,
-                onGetNewFact,
+                onGetFactByNumber,
                 navController,
                 onGetRandomFact,
                 onCloseErrorDialog
@@ -88,7 +89,7 @@ private fun SelectColumn(
     state: StartScreenUiState.Data,
     onChange: (String) -> Unit,
     onGetFact: (NavHostController, String) -> Unit,
-    onGetNewFact: (NavHostController, String) -> Unit,
+    onGetFactByNumber: (NavHostController, String) -> Unit,
     navController: NavHostController,
     onGetRandomFact: (NavHostController) -> Unit,
     onClose: () -> Unit,
@@ -105,6 +106,7 @@ private fun SelectColumn(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .fillMaxHeight(0.5f)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -128,7 +130,7 @@ private fun SelectColumn(
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    onGetNewFact(navController, state.number)
+                    onGetFactByNumber(navController, state.number)
                     focusManager.clearFocus()
                     showKeyboard.value = keyboardController?.hide()
                 },
@@ -151,15 +153,34 @@ private fun SelectColumn(
                 Card(modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(24.dp)
-                    .clickable { onGetFact(navController, item.number) }) {
-                    Text(text = item.text)
+                    .padding(8.dp)
+                    .clickable { onGetFact(navController, item.number) }
+                ) {
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        Text(
+                            modifier = Modifier
+                                .padding(start = 8.dp)
+                                .fillMaxWidth(0.5f),
+                            text = item.number,
+                            style = MaterialTheme.typography.body1,
+                            color = numberColor
+                        )
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth(1f)
+                                .padding(start = 8.dp),
+                            text = item.text,
+                            maxLines = 1,
+                            textAlign = TextAlign.End,
+                            style = MaterialTheme.typography.body1
+                        )
+                    }
                 }
             }
         }
     }
 
-    if (!state.isValidationError) {
+    if (state.isValidationError) {
         DialogError(onCloseErrorDialog = onClose)
     }
 }

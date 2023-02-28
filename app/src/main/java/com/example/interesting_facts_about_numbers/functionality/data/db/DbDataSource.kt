@@ -6,7 +6,7 @@ interface DbDataSource {
 
     suspend fun getAllNumbers(): List<NumberFact>
 
-    suspend fun getNumberFactByNumber(number: String): NumberFact
+    suspend fun getNumberFactByNumber(number: String?): NumberFact
 
     suspend fun insert(numberFact: NumberFact)
 

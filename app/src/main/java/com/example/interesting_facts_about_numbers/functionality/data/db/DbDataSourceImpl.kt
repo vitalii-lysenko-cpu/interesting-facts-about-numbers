@@ -9,7 +9,7 @@ class DbDataSourceImpl @Inject constructor(
     override suspend fun getAllNumbers(): List<NumberFact> =
         factDao.getAllNumbers()
 
-    override suspend fun getNumberFactByNumber(number: String): NumberFact =
+    override suspend fun getNumberFactByNumber(number: String?): NumberFact =
         factDao.getNumberFactByNumber(number)
 
     override suspend fun insert(numberFact: NumberFact) {

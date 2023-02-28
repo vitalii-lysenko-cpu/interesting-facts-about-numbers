@@ -29,16 +29,9 @@ internal interface ApiModule {
         @Reusable
         @Provides
         fun provideNumberApi(): NumberApi {
-            val httpLoggingInterceptor = HttpLoggingInterceptor()
-            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-            val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(httpLoggingInterceptor)
-                .build()
-
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(okHttpClient)
+                .client(okHttpClient(httpLoggingInterceptor()))
                 .addConverterFactory(
                     MoshiConverterFactory
                         .create()
@@ -47,6 +40,20 @@ internal interface ApiModule {
                 .build()
             numberApi = retrofit.create(NumberApi::class.java)
             return numberApi
+        }
+
+        @Provides
+        fun okHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+            return OkHttpClient.Builder()
+                .addInterceptor(httpLoggingInterceptor)
+                .build()
+        }
+
+        @Provides
+        fun httpLoggingInterceptor(): HttpLoggingInterceptor {
+            val httpLoggingInterceptor = HttpLoggingInterceptor()
+            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            return httpLoggingInterceptor
         }
     }
 }

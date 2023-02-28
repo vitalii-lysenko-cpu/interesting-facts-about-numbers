@@ -10,7 +10,7 @@ internal class FactRepositoryImpl @Inject constructor(
     private val apiDataSource: ApiDataSource,
     private val dbDataSource: DbDataSource,
 ) : FactRepository {
-    override suspend fun getNumberFactByNumber(num: String): NumberFact {
+    override suspend fun getNumberFactByNumber(num: String?): NumberFact {
         val fact = apiDataSource.getFact(num)
         dbDataSource.insert(fact)
         return dbDataSource.getNumberFactByNumber(num)

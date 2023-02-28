@@ -14,4 +14,5 @@ internal fun ApiNumberInterestingFact.toEntity(): NumberFact =
     NumberFact(
         number = number,
         text = text,
+        id = 0,
     )

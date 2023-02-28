@@ -14,6 +14,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.interesting_facts_about_numbers.R
+import com.example.interesting_facts_about_numbers.ui.theme.iconColor
+import com.example.interesting_facts_about_numbers.ui.theme.titleColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,9 +29,9 @@ fun InterestingFactTopAppBar(
 ) {
     CenterAlignedTopAppBar(
         title = {
-            if (title != null) {
+            title?.let {
                 Text(
-                    text = title,
+                    text = it,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -38,8 +41,8 @@ fun InterestingFactTopAppBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.White,
             scrolledContainerColor = Color.White,
-            navigationIconContentColor = com.example.interesting_facts_about_numbers.ui.theme.iconColor,
-            titleContentColor = com.example.interesting_facts_about_numbers.ui.theme.titleColor,
+            navigationIconContentColor = iconColor,
+            titleContentColor = titleColor,
             actionIconContentColor = Color.White,
         ),
         navigationIcon = {
@@ -89,7 +92,7 @@ object InterestingFactAppBarDefaults {
         onClick: () -> Unit
     ) = InterestingFactIconButton(
         icon = painterResource(
-            id = com.example.interesting_facts_about_numbers.R.drawable.ic_chevron_left
+            id = R.drawable.ic_chevron_left
         ),
         onClick = onClick
     )

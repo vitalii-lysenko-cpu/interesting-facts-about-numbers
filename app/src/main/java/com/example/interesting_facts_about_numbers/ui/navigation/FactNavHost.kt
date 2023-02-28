@@ -25,13 +25,13 @@ fun FactNavHost() {
         }
         composable(
             NavRoute.NumberFactScreen.route,
-            arguments = listOf(navArgument("number") {
+            arguments = listOf(navArgument(name = "number") {
                 type = NavType.StringType
                 defaultValue = "random"
-                nullable = true
+//                nullable = true
             })
         ) {
-            NumberFactScreen(navController = navController)
+                NumberFactScreen(navController = navController)
         }
     }
 }

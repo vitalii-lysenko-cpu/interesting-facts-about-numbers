@@ -7,7 +7,7 @@ import javax.inject.Inject
 class ApiDataSourceImpl @Inject constructor(
     private val numberApi: NumberApi
 ) : ApiDataSource {
-    override suspend fun getFact(num: String): NumberFact =
+    override suspend fun getFact(num: String?): NumberFact =
         numberApi.getFact(num).toEntity()
 
     override suspend fun getRandomFact(): NumberFact =

@@ -8,5 +8,5 @@ data class NumberFact(
     val number: String,
     val text: String,
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val id: Int,
 )

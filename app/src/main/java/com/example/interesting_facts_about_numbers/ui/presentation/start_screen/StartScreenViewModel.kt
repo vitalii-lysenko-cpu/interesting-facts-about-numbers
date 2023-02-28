@@ -15,14 +15,14 @@ class StartScreenViewModel @Inject constructor(
     private val getHistoryUseCase: GetHistoryUseCase,
 ) : ViewModel() {
 
-    private val mutableStartScreenState: MutableStateFlow<String> =
+    private val textFieldValueState: MutableStateFlow<String> =
         MutableStateFlow("")
 
     private val mutableHistory: MutableStateFlow<List<NumberFact>> =
         MutableStateFlow(emptyList())
 
     private val isErrorState: MutableStateFlow<Boolean> =
-        MutableStateFlow(true)
+        MutableStateFlow(false)
 
     init {
         viewModelScope.launch {
@@ -32,7 +32,7 @@ class StartScreenViewModel @Inject constructor(
 
     val startScreenState: StateFlow<StartScreenUiState> =
         combine(
-            mutableStartScreenState,
+            textFieldValueState,
             mutableHistory,
             isErrorState,
         ) { number, historyList, isError ->
@@ -49,34 +49,40 @@ class StartScreenViewModel @Inject constructor(
 
     fun onChange(number: String) {
         viewModelScope.launch {
-            mutableStartScreenState.emit(value = number)
+            textFieldValueState.emit(value = number)
         }
     }
 
-    fun getNewFact(navController: NavHostController, number: String) {
-        if (mutableStartScreenState.value.isNotEmpty()) {
-            getFact(navController, number)
+    fun navigateToNumberFactScreenWithNumberArgument(
+        navController: NavHostController,
+        number: String,
+    ) {
+        if (textFieldValueState.value.isNotEmpty()) {
+            navigateToNumberFactScreenFromHistory(navController, number)
         } else {
             viewModelScope.launch {
-                isErrorState.emit(false)
+                isErrorState.emit(true)
             }
         }
     }
 
-    fun getFact(navController: NavHostController, number: String) {
+    fun navigateToNumberFactScreenFromHistory(
+        navController: NavHostController,
+        number: String?,
+    ) {
         navController.navigate(
-            "number_fact_screen/$number"
+            "number_fact_screen/${number}"
         )
     }
 
 
-    fun getRandomFact(navController: NavHostController) {
+    fun navigateToNumberFactScreenWithRandomArgument(navController: NavHostController) {
         navController.navigate("number_fact_screen/random")
     }
 
     fun onCloseErrorDialog() {
         viewModelScope.launch {
-            isErrorState.emit(true)
+            isErrorState.emit(false)
         }
     }
 }

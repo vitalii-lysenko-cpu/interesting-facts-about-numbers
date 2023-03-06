@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">interesting-facts-about-numbers</string>
+    <string name="enter_number">Enter number</string>
+    <string name="number_fact">Number fact</string>
+    <string name="error_enter_number">You did not enter number</string>
+    <string name="close">Close</string>
+    <string name="get_fact_by_number">Get fact by number</string>
+    <string name="get_random_fact">Get random fact</string>
+    <string name="connection_error">Connection error!</string>
 </resources>
